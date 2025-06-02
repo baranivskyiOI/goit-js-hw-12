@@ -7,17 +7,22 @@ const axios = Axios.create({
   },
 });
 
-export default function getImagesByQuery(query) {
+export default function getImagesByQuery(query, page, per_page = 15) {
   return axios
     .get('', {
       params: {
         q: query,
+        page: page,
+        per_page: per_page,
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: true,
       },
     })
     .then(response => {
-      return response.data.hits;
+      return {
+        hits: response.data.hits,
+        total: response.data.totalHits,
+      };
     });
 }

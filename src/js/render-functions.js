@@ -5,6 +5,7 @@ let lightbox;
 
 const imagesList = document.querySelector('.gallery');
 const loader = document.querySelector('.loader');
+const loadMoreBtn = document.querySelector('.more-btn');
 
 function IMGelement(
   comments,
@@ -28,7 +29,7 @@ function IMGelement(
             <li><b>Comments</b><span>${comments}</span></li>
             <li><b>Downloads</b><span>${downloads}</span></li>
           </ul>
-        </li>
+        </li> 
     `;
 }
 
@@ -54,24 +55,27 @@ function IMGelements(imgs) {
         tags
       );
     })
-    .join('\n');
+    .join('');
 }
 
 function clearGallery() {
   imagesList.innerHTML = '';
 }
+//!=============================================================
 
-export function showLoader() {
-  loader.classList.add('is-visible');
-}
-export function hideLoader() {
-  loader.classList.remove('is-visible');
-}
-
-export function createGallery(imgArr) {
+export function renderInitialGallery(imgArr) {
   clearGallery();
   imagesList.innerHTML = IMGelements(imgArr);
+  refreshLightbox();
+}
+//!=============================================================
+export function appendToGallery(imgArr) {
+  imagesList.insertAdjacentHTML('beforeend', IMGelements(imgArr));
+  refreshLightbox();
+}
+//!=============================================================
 
+function refreshLightbox() {
   if (!lightbox) {
     lightbox = new SimpleLightbox('.card a', {
       captionsData: 'alt',
@@ -80,4 +84,17 @@ export function createGallery(imgArr) {
   } else {
     lightbox.refresh();
   }
+}
+
+export function showLoadMoreButton() {
+  loadMoreBtn.classList.remove('is-hidden');
+}
+export function hideLoadMoreButton() {
+  loadMoreBtn.classList.add('is-hidden');
+}
+export function showLoader() {
+  loader.classList.add('is-visible');
+}
+export function hideLoader() {
+  loader.classList.remove('is-visible');
 }
