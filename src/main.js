@@ -41,7 +41,7 @@ form.addEventListener('submit', async e => {
     showLoadMoreButton();
 
     renderInitialGallery(hits);
-    console.log(totalHits);
+
     if (!hits.length) {
       iziToast.error({
         title: 'Error',
@@ -83,9 +83,7 @@ loadMoreBtn.addEventListener('click', async () => {
 
   const { hits, total } = await getImagesByQuery(currentQuery, page);
   totalHits = total;
-  console.log(hits);
 
-  console.log(totalHits);
   appendToGallery(hits);
   scrollPage();
   hideLoader();
