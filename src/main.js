@@ -81,14 +81,21 @@ loadMoreBtn.addEventListener('click', async () => {
   page += 1;
   showLoader();
 
-  const { hits, total } = await getImagesByQuery(currentQuery, page);
-  totalHits = total;
+  try {
+    const { hits, total } = await getImagesByQuery(currentQuery, page);
+    totalHits = total;
 
-  appendToGallery(hits);
-  scrollPage();
-  hideLoader();
-  hideLoadMoreButton();
-  updateBtnStatus();
+    appendToGallery(hits);
+    scrollPage();
+    updateBtnStatus();
+  } catch (error) {
+    iziToast.error({
+      title: 'Error',
+      message: `${error}`,
+    });
+  } finally {
+    hideLoader();
+  }
 });
 
 //!=============================================================

@@ -7,22 +7,19 @@ const axios = Axios.create({
   },
 });
 
-export default function getImagesByQuery(query, page, per_page = 15) {
-  return axios
-    .get('', {
-      params: {
-        q: query,
-        page: page,
-        per_page: per_page,
-        image_type: 'photo',
-        orientation: 'horizontal',
-        safesearch: true,
-      },
-    })
-    .then(response => {
-      return {
-        hits: response.data.hits,
-        total: response.data.totalHits,
-      };
-    });
+export default async function getImagesByQuery(query, page, per_page = 15) {
+  const res = await axios.get('', {
+    params: {
+      q: query,
+      page: page,
+      per_page: per_page,
+      image_type: 'photo',
+      orientation: 'horizontal',
+      safesearch: true,
+    },
+  });
+  return {
+    hits: res.data.hits,
+    total: res.data.totalHits,
+  };
 }
